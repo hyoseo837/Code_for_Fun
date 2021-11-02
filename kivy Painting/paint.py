@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.graphics import Color,Ellipse,Line
 
 
@@ -21,7 +21,7 @@ class MyPaintApp(App):
     def build(self):
         parent = Widget()
         self.painter = MyPaintWidget()
-        clearbtn = Button(text='clear', on_release = self.clear_canvas)
+        clearbtn = Label(text='clear',pos=(100,100))
         parent.add_widget(self.painter)
         parent.add_widget(clearbtn)
 
