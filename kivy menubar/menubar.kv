@@ -1,18 +1,11 @@
 #:kivy 1.0.9
-<menutab>:
-    id: 'menutab'
-    size_hint_y: None
-    size_y: 100
-    pos_hint: {'top' : 1}
-    Button:
-        text: 'hello'
-        size_hint_x: None
-    Button:
-        text: 'hello'
-        size_hint_x: None
-    Button:
-        text: 'hello'
-        size_hint_x: None
-    Button:
-        text: 'hello'
-        size_hint_x: None
+<menubarLayout>:
+    id: 'layout'
+    canvas:
+        Rectangle:
+            size:50, 50
+
+<function_button>:
+    background_color: 'grey'
+    size_hint: (None,1)
+    size: (60,50)
