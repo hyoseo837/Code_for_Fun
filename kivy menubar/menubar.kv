@@ -3,9 +3,20 @@
     id: 'layout'
     canvas:
         Rectangle:
-            size:50, 50
+            size: self.size
+            pos: self.pos
+
+<menuTab>:
+    id: 'tab'
+    canvas:
+        Color:
+            rgba: .5,.5,.5,1
+        Rectangle:
+            size: (self.size[0],self.size[1])
+            pos: self.pos
 
 <function_button>:
     background_color: 'grey'
-    size_hint: (None,1)
+    size_hint: (None,0.8)
     size: (60,50)
+    pos_hint: {'top':0.9}
