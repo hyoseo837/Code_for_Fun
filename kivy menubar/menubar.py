@@ -18,7 +18,7 @@ class color_menu(GridLayout):
     current_color = (0,0,0)
     def clear_brush (self):
         for i in self.children:
-            i.background_color = 'grey'
+            i.background_color = i.brush_color
 
 class color_button(Button):
     def __init__(self,**kwargs):
@@ -28,12 +28,12 @@ class color_button(Button):
             kwargs.pop('brush_color')
             self.background_normal = ''
             self.background_color = self.brush_color
-            self.disabled_color = (*self.brush_color,.7)
         super().__init__(**kwargs)
 
     def on_release(self):
-        self.parent.parent.color = self.brush_color
+        self.parent.current_color = self.brush_color
         self.parent.clear_brush()
+        self.background_color = ((self.brush_color[0]-0.2, self.brush_color[1]-0.2, self.brush_color[2]-0.2))
 
 class clr_btn(Button):
     def on_release(self):
@@ -43,7 +43,7 @@ class paper(Widget):
     
     def on_touch_down(self, touch):
         with self.canvas:
-            Color(*self.parent.children[0].color)
+            Color(*self.parent.children[-1].children[0].current_color)
             touch.ud['line'] = Line(points=(touch.x,touch.y),width=2)
     
     def on_touch_move(self, touch):
