@@ -16,6 +16,23 @@
             pos: self.pos
 
 <color_button>:
-    size_hint: (None,0.8)
-    size: (25,25)
+    size_hint: (None,None)
+    size: (20,20)
+    pos: self.pos
     pos_hint: {'top':0.9}
+
+<brush_size_menu>:
+    canvas:
+        Color:
+            rgba: .7,.7,.7,1
+        Rectangle:
+            size: self.size[0] + 6, self.size[1]
+            pos: self.pos[0]-3, self.pos[1]
+        
+<color_menu>:
+    canvas:
+        Color:
+            rgba: .7,.7,.7,1
+        Rectangle:
+            size: self.size[0] + 6, self.size[1]
+            pos: self.pos[0]-3, self.pos[1]

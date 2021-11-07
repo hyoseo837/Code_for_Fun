@@ -14,6 +14,18 @@ class menubarLayout(BoxLayout):
 class menuTab(BoxLayout):
     pass 
 
+######################################################################################
+class brush_size_menu(BoxLayout):
+    current_brush_size = 2
+
+class brush_size_button(Button):
+    def on_release(self):
+        if self.text == '+':
+            self.parent.current_brush_size += 1
+        elif self.text == '-' and self.parent.current_brush_size >= 1.5:
+            self.parent.current_brush_size -= 1
+
+######################################################################################
 class color_menu(GridLayout):
     current_color = (0,0,0)
     def clear_brush (self):
@@ -39,22 +51,23 @@ class clr_btn(Button):
     def on_release(self):
         self.parent.clear_canvas()
 
+######################################################################################
 class paper(Widget):
-    
     def on_touch_down(self, touch):
+        color_function = self.parent.children[-1].children[1]
+        size_function = self.parent.children[-1].children[0]
         with self.canvas:
-            Color(*self.parent.children[-1].children[0].current_color)
-            touch.ud['line'] = Line(points=(touch.x,touch.y),width=2)
+            Color(*color_function.current_color)
+            touch.ud['line'] = Line(points=(touch.x,touch.y),width=size_function.current_brush_size)
     
     def on_touch_move(self, touch):
         if touch.y > 65 and touch.y < self.parent.size[1]-60:
                 touch.ud['line'].points += [touch.x,touch.y]
 
-
-
+######################################################################################
 class menubarApp(App):
     def build(self):
-        color_section = color_menu(rows=3, size_hint_x=None, size=(120,1))
+        color_section = color_menu(rows=3, size_hint_x=None, size=(100,60))
         color_section.add_widget(color_button(text='',brush_color=(0,0,0)))
         color_section.add_widget(color_button(text='',brush_color=(1,0,0)))
         color_section.add_widget(color_button(text='',brush_color=(0,1,0)))
@@ -64,10 +77,15 @@ class menubarApp(App):
         color_section.add_widget(color_button(text='',brush_color=(1,0,1)))
         color_section.add_widget(color_button(text='',brush_color=(1,1,1)))
 
-        menus = menuTab(orientation='horizontal',size_hint_y=None,size = (50,60))
-        menus.add_widget(color_section)
+        brush_size_section = brush_size_menu(orientation = 'vertical',size_hint_x=None,size=(30,60))
+        brush_size_section.add_widget(brush_size_button(text='+',pos_hint={'top':1}))
+        brush_size_section.add_widget(brush_size_button(text='-',pos_hint={'top':0}))
 
-        menulayer = menubarLayout(orientation='vertical')
+        menus = menuTab(orientation='horizontal',size_hint_y=None,size = (40,60))
+        menus.add_widget(color_section)
+        menus.add_widget(brush_size_section)
+
+        menulayer = menubarLayout(orientation='vertical',spacing=(30,10))
         menulayer.add_widget(menus)
         menulayer.add_widget(paper())
         menulayer.add_widget(clr_btn(text='clear',size_hint_y=None,size = (65,65)))
