@@ -54,3 +54,15 @@
             pos: self.pos[0]+self.size[0]*2/3, self.pos[1]
             size: self.size[0]/3 , self.size[1]
         
+<brush_now_section>:
+    canvas:
+        Color:
+            rgba: .7,.7,.7,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: self.brush_color
+        Rectangle:
+            pos: self.center[0] - self.brush_size/2, self.center[1] - self.brush_size/2
+            size: self.brush_size*2,self.brush_size*2
