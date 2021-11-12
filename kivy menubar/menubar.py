@@ -12,8 +12,8 @@ class menubarLayout(BoxLayout):
         self.children[1].canvas.clear()
 
 class menuTab(BoxLayout):
-    current_color = [0,0,0]
-    current_brush_size = 2 
+    current_color = [0,0,0,1]
+    current_brush_size = 5
 
 ######################################################################################
 class brush_size_menu(BoxLayout):
@@ -80,7 +80,6 @@ class color_rgb_button(Button):
                 mother[0] = 1
             if mother[0] < 0:
                 mother[0] = 0
-
         if self.parent.color_id == (0,1,0):
             if self.text == '+':
                 mother[1] += 0.05
@@ -90,7 +89,6 @@ class color_rgb_button(Button):
                 mother[1] = 1
             if mother[1] < 0:
                 mother[1] = 0
-
         if self.parent.color_id == (0,0,1):
             if self.text == '+':
                 mother[2] += 0.05
@@ -100,6 +98,15 @@ class color_rgb_button(Button):
                 mother[2] = 1
             if mother[2] < 0:
                 mother[2] = 0
+        if self.parent.color_id == (0,0,0):
+            if self.text == '+':
+                mother[3] += 0.05
+            elif self.text == '-':
+                mother[3] -= 0.05
+            if mother[3] > 1:
+                mother[3] = 1
+            if mother[3] < 0:
+                mother[3] = 0
         
         brush.update_brush(mother,'-')
 ######################################################################################
@@ -118,7 +125,7 @@ class paper(Widget):
 ######################################################################################
 class brush_now_section(Widget):
     brush_color = 0,0,0,1
-    brush_size = 2
+    brush_size = 5
     
     def update_brush(self, color, size):
         self.canvas.clear()
@@ -127,7 +134,6 @@ class brush_now_section(Widget):
             self.brush_color = color
         if size != '-':
             self.brush_size = size
-        print(self.brush_color)
         with self.canvas:
             Color(.7,.7,.7,1)
             Rectangle(pos=self.pos, size=self.size)
@@ -138,14 +144,14 @@ class brush_now_section(Widget):
 class menubarApp(App):
     def build(self):
         color_section = color_menu(rows=3, size_hint_x=None, size=(100,60), spacing = 5) #color boxes
-        color_section.add_widget(color_button(text='',brush_color=(1,0,0)))
-        color_section.add_widget(color_button(text='',brush_color=(1,1,0)))
-        color_section.add_widget(color_button(text='',brush_color=(0,1,0)))
-        color_section.add_widget(color_button(text='',brush_color=(1,0,1)))
-        color_section.add_widget(color_button(text='',brush_color=(0,1,1)))
-        color_section.add_widget(color_button(text='',brush_color=(0,0,0)))
-        color_section.add_widget(color_button(text='',brush_color=(0,0,1)))
-        color_section.add_widget(color_button(text='',brush_color=(1,1,1)))
+        color_section.add_widget(color_button(text='',brush_color=(1,0,0,1)))
+        color_section.add_widget(color_button(text='',brush_color=(1,1,0,1)))
+        color_section.add_widget(color_button(text='',brush_color=(0,1,0,1)))
+        color_section.add_widget(color_button(text='',brush_color=(1,0,1,1)))
+        color_section.add_widget(color_button(text='',brush_color=(0,1,1,1)))
+        color_section.add_widget(color_button(text='',brush_color=(0,0,0,1)))
+        color_section.add_widget(color_button(text='',brush_color=(0,0,1,1)))
+        color_section.add_widget(color_button(text='',brush_color=(1,1,1,1)))
         
         color_rgb_red = color_rgb_part(orientation = 'vertical',size_hint_x = None, size=(40,60),color_id=(1,0,0)) #color rgb setting
         color_rgb_red.add_widget(color_rgb_button(text='+'))
@@ -156,11 +162,16 @@ class menubarApp(App):
         color_rgb_blue = color_rgb_part(orientation = 'vertical',size_hint_x = None, size=(40,60),color_id=(0,0,1))
         color_rgb_blue.add_widget(color_rgb_button(text='+'))
         color_rgb_blue.add_widget(color_rgb_button(text='-'))
+        color_rgb_aa = color_rgb_part(orientation = 'vertical',size_hint_x = None, size=(40,60),color_id=(0,0,0))
+        color_rgb_aa.add_widget(color_rgb_button(text='+'))
+        color_rgb_aa.add_widget(color_rgb_button(text='-'))
+
 
         color_rgb_section = color_rgb_menu(orientation = 'horizontal', size_hint_x=None, size=(120,60)) #color rgb section
         color_rgb_section.add_widget(color_rgb_red)
         color_rgb_section.add_widget(color_rgb_green)
         color_rgb_section.add_widget(color_rgb_blue)
+        color_rgb_section.add_widget(color_rgb_aa)
 
         brush_size_section = brush_size_menu(orientation = 'vertical',size_hint_x=None,size=(30,60)) #brush size
         brush_size_section.add_widget(brush_size_button(text='+',pos_hint={'top':1}))
