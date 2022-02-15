@@ -29,9 +29,9 @@ def horizontal_fill(row,hint,gap):
             count += 1
             stack = hint[count]
             gap_stack = gap
-            pointer +=1
             if gap == 0:
                 row[pointer] = 'x'
+            pointer +=1
             continue
         if gap_stack > 0:
             gap_stack-=1
@@ -79,7 +79,7 @@ for i in range(size):
         gap = (size - total(horizontal_hint[i]))
         horizontal_fill(grid[i], horizontal_hint[i], gap)
 
-        
+
 
 for i in range(size):
     if vertical_hint[i] == [0]:
