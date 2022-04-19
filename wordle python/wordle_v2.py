@@ -15,10 +15,10 @@ def prt_used_char():
     for i in chars:
         print(i)
 
-f = open("wordle python/wordle-allowed-guesses.txt",'r')
+f = open("wordle-allowed-guesses.txt",'r')
 allowed_guesses = list(f.readlines())
 f = close()
-f = open("wordle python/wordle-answers-alphabetical.txt",'r')
+f = open("wordle-answers-alphabetical.txt",'r')
 words_list = list(f.readlines())
 f = close()
 chars = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
@@ -31,6 +31,7 @@ for i in range(len(allowed_guesses)):
     allowed_guesses[i] = allowed_guesses[i].upper()
 
 target = random.choice(words_list)
+target = "SLEEP"
 
 while True:
     prt_used_char()

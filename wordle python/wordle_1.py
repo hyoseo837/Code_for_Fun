@@ -16,6 +16,7 @@ for i in range(len(words)):
     words[i] = words[i][:-1]
     words[i] = words[i].upper()
 t_word = random.choice(words)
+t_word = "SLEEP"
 
 while True:
     guess = input("\nguess : ").upper()
